@@ -2,20 +2,23 @@
 <div id="app">
   <div class="header">
     <router-link to="/">
-      <div class="logo">
-        <img src="/booklogo.png">
-      </div>
+      <img class="logo" src="/images/movielogo.png">
     </router-link>
     <div class="title">
-      <h1>Books R Us</h1>
+      <h1>My Movie Library</h1>
     </div>
+    <router-link to="/library">
+      <img class="manageLibrary" src="/images/manageLibrary.png">
+    </router-link>
+    <router-link to="/watch">
+      <img class="navigation" src="/images/movieSelector.jpg">
+    </router-link>
   </div>
   <div class="content">
     <router-view />
   </div>
   <div class="footer">
-    <router-link to="/admin">Admin</router-link>&nbsp;
-    <a href="https://github.com/BYU-CS-260-Winter-2021/lab-4-museum-of-ordinary-objects-ashtyntaylor">Github</a>
+    <a href="https://github.com/ashtyntaylor/creative-project-4">Github</a>
   </div>
 </div>
 </template>
@@ -60,6 +63,7 @@ body {
   padding: 20px 100px 0px 100px;
   background: #e3e3e3;
   font-size: 12px;
+  text-align: center;
 }
 
 .footer a {
@@ -68,6 +72,7 @@ body {
 
 h1 {
   font-size: 20px;
+  padding-top: 7px;
 }
 
 h2 {
@@ -76,6 +81,56 @@ h2 {
 
 h3 {
   font-size: 12px;
+}
+
+.logo {
+  height: 100px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+}
+
+.navigation {
+  height: 25px;
+  padding-top: 40px;
+  position: absolute;
+  right: 0%;
+}
+
+.manageLibrary {
+  height: 25px;
+  padding-top: 40px;
+  position: absolute;
+  right: 13%;
+}
+
+/* menu on medium-sized screens */
+@media only screen and (max-width: 1045px) and (min-width: 648px) {
+  .navigation{
+    padding-top: 60px;
+  }
+
+  .manageLibrary {
+    padding-top: 20px;
+    right: 0%;
+  }
+}
+
+/* menu on small screens */
+@media only screen and (max-width: 647px) and (min-width: 500px) {
+  .navigation {
+    padding-top: 105px;
+    height: 24px;
+  }
+
+  .manageLibrary {
+    padding-top: 105px;
+    right: 25%;
+    height: 24px;
+  }
+
+  .header {
+    padding-bottom: 20px;
+  }
 }
 
 </style>

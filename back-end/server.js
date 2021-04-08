@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 const mongoose = require('mongoose');
 
 // connect to the database
-mongoose.connect('mongodb://localhost:27017/museum', {
+mongoose.connect('mongodb://localhost:27017/movieLibrary', {
   useNewUrlParser: true
 });
 
@@ -23,31 +23,30 @@ const upload = multer({
   }
 });
 
-// Create a scheme for items in the museum: a title and a path to an image.
-const itemSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
   title: String,
-  itemDescription: String,
+  description: String,
   path: String,
+  lastRecommended: String,
+  genre: String,
 });
 
-// Create a model for items in the museum.
-const Item = mongoose.model('Item', itemSchema);
+const Movie = mongoose.model('Movie', movieSchema);
 
-// Get a list of all of the items in the museum.
-app.get('/api/items', async (req, res) => {
+app.get('/api/movies', async (req, res) => {
   try {
-    let items = await Item.find();
-    res.send(items);
+    let movies = await Movie.find();
+    res.send(movies);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
   }
 });
 
-//Delete an Item
-app.delete('/api/items/:id', async (req, res) => {
+//Delete a Movie
+app.delete('/api/movies/:id', async (req, res) => {
   try {
-    await Item.deleteOne({
+    await Movie.deleteOne({
       _id: req.params.id
     });
     res.sendStatus(200);
@@ -58,16 +57,16 @@ app.delete('/api/items/:id', async (req, res) => {
 });
 
 //Edit an Item
-app.put('/api/items/:id', async (req, res) => { 
-  
+app.put('/api/movies/:id', async (req, res) => {
+
   try {
-    let item = await Item.findOne({
+    let movie = await Movie.findOne({
       _id: req.params.id
     });
-    item.title = req.body.title;
-    item.itemDescription = req.body.itemDescription;
-    await item.save();
-    res.send(item);
+    movie.title = req.body.title;
+    movie.description = req.body.description;
+    await movie.save();
+    res.send(movie);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -76,7 +75,7 @@ app.put('/api/items/:id', async (req, res) => {
 
 // Upload a photo. Uses the multer middleware for the upload and then returns
 // the path where the photo is stored in the file system.
-app.post('/api/photos', upload.single('photo'), async (req, res) => {
+app.post('/api/posterImages', upload.single('posterImage'), async (req, res) => {
   // Just a safety check
   if (!req.file) {
     return res.sendStatus(400);
@@ -86,16 +85,17 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
   });
 });
 
-// Create a new item in the museum: takes a title and a path to an image.
-app.post('/api/items', async (req, res) => {
-  const item = new Item({
+app.post('/api/movies', async (req, res) => {
+  const movie = new Movie({
     title: req.body.title,
-    itemDescription: req.body.itemDescription,
+    description: req.body.description,
     path: req.body.path,
+    lastRecommended: null,
+    genre: req.body.genre,
   });
   try {
-    await item.save();
-    res.send(item);
+    await movie.save();
+    res.send(movie);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
