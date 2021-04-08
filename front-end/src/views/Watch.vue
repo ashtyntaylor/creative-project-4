@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     filteredMovies() {
-      console.log("filtering for " + this.genreFilter);
+      //console.log("filtering for " + this.genreFilter);
       return this.movies.filter(movie => {
         return movie.genre == this.genreFilter;
       });
@@ -81,20 +81,20 @@ export default {
     },
     selectGenre(genre) {
       this.genreFilter = genre;
-      console.log("we selected " + genre);
-      console.log("filtered list = " + this.filteredMovies);
+      //console.log("we selected " + genre);
+      //console.log("filtered list = " + this.filteredMovies);
       this.randomMovie(this.filteredMovies);
     },
     getRandom(min, max) {
-      console.log("generating random between " + min + " and " + max);
+      //console.log("generating random between " + min + " and " + max);
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum and minimum are inclusive
     },
     randomMovie(pickList) {
-      console.log("making a recommendation from " + pickList);
+      //console.log("making a recommendation from " + pickList);
       let pick = this.getRandom(0, pickList.length - 1);
-      console.log("our pick = " + pick);
+      //console.log("our pick = " + pick);
       this.recommendation = pickList[pick];
     },
   }
