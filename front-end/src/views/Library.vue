@@ -2,14 +2,17 @@
 <div class="library">
   <h1>Manage My Library</h1>
     <div class="heading">
-      <div class="circle">1</div>
-      <h2>Add Movie</h2>
+      <h1>-Add Movie-</h1>
     </div>
     <div class="add">
       <div class="form">
         <input v-model="title" placeholder="Title">
         <br />
         <input v-model="genre" placeholder="Genre">
+        <br />
+        <input v-model="duration" placeholder="Duration (minutes)">
+        <br />
+        <input v-model="starring" placeholder="Actor Name">
         <br />
         <textarea v-model="description" placeholder="Description" />
         <br />
@@ -19,28 +22,32 @@
       <div class="upload" v-if="addMovie">
         <h2>{{addMovie.title}}</h2>
         <h3>{{addMovie.genre}}</h3>
+        <h3>{{addMovie.duration}}</h3>
+        <h3>{{addMovie.starring}}</h3>
         <h3>{{addMovie.description}}</h3>
         <img :src="addMovie.path" />
       </div>
     </div>
     <div class="heading">
-      <div class="circle">2</div>
-      <h2>Edit/Delete Movie</h2>
+      <h1>-Edit/Delete Movie-</h1>
     </div>
     <div class="edit">
       <div class="form">
-        <input v-model="findTitle" placeholder="Search">
         <div class="suggestions" v-if="suggestions.length > 0">
           <div class="suggestion" v-for="s in suggestions" :key="s.id" @click="selectMovie(s)">{{s.title}}
           </div>
         </div>
       </div>
       <div class="upload" v-if="findMovie">
-        <input v-model="findMovie.title">
+        <input v-model="findMovie.title" placeholder="Title">
         <br />
-        <input v-model="findMovie.genre">
+        <input v-model="findMovie.genre" placeholder="Genre">
         <br />
-        <textarea v-model="findMovie.description" />
+        <input v-model="findMovie.duration" placeholder="Duration (minutes)">
+        <br />
+        <input v-model="findMovie.starring" placeholder="Actor name">
+        <br />
+        <textarea v-model="findMovie.description" placeholder="Enter a description"/>
         <p></p>
         <img :src="findMovie.path" />
       </div>
@@ -55,6 +62,9 @@
 </template>
 
 <style scoped>
+h1 {
+  text-align: center;
+}
 /* Suggestions */
 .suggestions {
   width: 200px;
@@ -66,8 +76,7 @@
 }
 
 .suggestion:hover {
-  background-color: #5BDEFF;
-  color: #fff;
+  background-color: #cce6ff;
 }
 .image h2 {
   font-style: italic;
@@ -76,28 +85,16 @@
 
 .heading {
   display: flex;
-  margin-bottom: 20px;
   margin-top: 20px;
 }
 
 .heading h2 {
   margin-top: 8px;
-  margin-left: 10px;
 }
 
 .add,
 .edit {
   display: flex;
-}
-
-.circle {
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  padding: 8px;
-  background: #333;
-  color: #fff;
-  text-align: center
 }
 
 /* Form */
@@ -137,7 +134,8 @@ export default {
       title: "",
       description: "",
       genre: "",
-      lastRecommended: null,
+      duration: null,
+      starring: "",
       file: null,
       addMovie: null,
       movies: [],
@@ -160,10 +158,12 @@ export default {
         await axios.put("/api/movies/" + movie._id, {
           title: this.findMovie.title,
           genre: this.findMovie.genre,
+          duration: this.findMovie.duration,
+          starring: this.findMovie.starring,
           description: this.findMovie.description,
         });
         this.findMovie = null;
-        this.getMovie();
+        this.getMovies();
         return true;
       } catch (error) {
         console.log(error);
@@ -172,6 +172,7 @@ export default {
     selectMovie(movie) {
       this.findTitle = "";
       this.findMovie = movie;
+      console.log("selected movie="+JSON.stringify(movie));
     },
     async deleteMovie(movie) {
       try {
@@ -203,6 +204,8 @@ export default {
         let r2 = await axios.post('/api/movies', {
           title: this.title,
           genre: this.genre,
+          duration: this.duration,
+          starring: this.starring,
           description: this.description,
           path: r1.data.path
         });

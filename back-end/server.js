@@ -27,8 +27,9 @@ const movieSchema = new mongoose.Schema({
   title: String,
   description: String,
   path: String,
-  lastRecommended: String,
+  duration: String,
   genre: String,
+  starring: String
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
@@ -65,6 +66,8 @@ app.put('/api/movies/:id', async (req, res) => {
     });
     movie.title = req.body.title;
     movie.description = req.body.description;
+    movie.starring = req.body.starring;
+    movie.duration = req.body.duration;
     await movie.save();
     res.send(movie);
   } catch (error) {
@@ -90,8 +93,9 @@ app.post('/api/movies', async (req, res) => {
     title: req.body.title,
     description: req.body.description,
     path: req.body.path,
-    lastRecommended: null,
+    duration: req.body.duration,
     genre: req.body.genre,
+    starring: req.body.starring,
   });
   try {
     await movie.save();

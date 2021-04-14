@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Library from '../views/Library.vue'
-import Watch from '../views/Watch.vue'
+import Browse from '../views/Browse.vue'
 
 Vue.use(VueRouter)
 
@@ -17,9 +17,9 @@ const routes = [{
     component: Library
   },
   {
-    path: '/watch',
-    name: 'watch',
-    component: Watch
+    path: '/browse',
+    name: 'browse',
+    component: Browse
   }
 ]
 

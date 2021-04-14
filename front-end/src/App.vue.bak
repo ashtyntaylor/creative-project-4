@@ -1,18 +1,21 @@
 <template>
 <div id="app">
-  <div class="header">
-    <router-link to="/">
-      <img class="logo" src="/images/movielogo.png">
-    </router-link>
-    <div class="title">
-      <h1>Movie Recommender</h1>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <router-link to="#">
+          <img class="navbar-brand" src="/images/movielogo.png">
+        </router-link>
+      </div>
+      <div class="navbar-header">
+        <a class="navbar-brand">Movie Recommender</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <router-link tag="li" class-active="active" to="/library" exact>Manage Library</router-link>
+        <router-link tag="li" class-active="active" to="/browse" exact>Browse Movies</router-link>
+      </ul>
     </div>
-    <router-link to="/library">
-      <img class="manageLibrary" src="/images/manageLibrary.png">
-    </router-link>
-    <router-link to="/browse">
-      <img class="navigation" src="/images/browseMovies.png">
-    </router-link>
+  </nav>
   </div>
   <div class="content">
     <router-view />
@@ -42,7 +45,7 @@ body {
 .header {
   display: flex;
   padding: 0px 100px 0px 100px;
-  background-color: #cce6ff;
+  background-color: #5BDEFF;
   color: #1C454F;
 }
 
@@ -95,29 +98,43 @@ h3 {
 }
 
 .navigation {
-  height: 20px;
+  height: 25px;
   padding-top: 40px;
-  padding-right: 15px;
   position: absolute;
   right: 0%;
 }
+
 .manageLibrary {
-  height: 20px;
+  height: 25px;
   padding-top: 40px;
   position: absolute;
-  right: 12%;
+  right: 13%;
 }
 
+nav li {
+  text-align: right;
+  background-color: #5BDEFF;
+  color: #1C454F;
+  padding-top: 10px;
+  padding-right: 50px;
+  list-style: none;
+  vertical-align: middle;
+}
+nav li:hover,
+nav li:active{
+   color: #4d4d4d;
+   cursor: pointer;
+   background-color: white;
+ }
+
 /* menu on medium-sized screens */
-@media only screen and (max-width: 1150px) and (min-width: 648px) {
+@media only screen and (max-width: 1045px) and (min-width: 648px) {
   .navigation{
     padding-top: 60px;
-    padding-right: 10px;
   }
 
   .manageLibrary {
     padding-top: 20px;
-    padding-right: 10px;
     right: 0%;
   }
 }
@@ -126,13 +143,13 @@ h3 {
 @media only screen and (max-width: 647px) and (min-width: 500px) {
   .navigation {
     padding-top: 105px;
-    height: 20px;
+    height: 24px;
   }
 
   .manageLibrary {
     padding-top: 105px;
     right: 25%;
-    height: 20px;
+    height: 24px;
   }
 
   .header {
